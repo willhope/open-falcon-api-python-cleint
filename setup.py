@@ -29,7 +29,7 @@ setup(
     version=version,
     description="open-falcon client",
     long_description=readme,
-    url='https://github.com/influxdb/influxdb-python',
+    url='https://github.com/willhope/open-falcon-api-python-cleint.git',
     license='MIT License',
     packages=find_packages(exclude=['tests']),
     classifiers=(
