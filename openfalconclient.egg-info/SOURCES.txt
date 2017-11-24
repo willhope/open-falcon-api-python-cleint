@@ -1,0 +1,12 @@
+LICENSE
+MANIFEST.in
+README.txt
+setup.cfg
+setup.py
+openfalconclient/__init__.py
+openfalconclient/client.py
+openfalconclient/exceptions.py
+openfalconclient.egg-info/PKG-INFO
+openfalconclient.egg-info/SOURCES.txt
+openfalconclient.egg-info/dependency_links.txt
+openfalconclient.egg-info/top_level.txt

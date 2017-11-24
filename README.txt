@@ -26,3 +26,12 @@ cli.admin.delete_user.delete(params=params)
 
 # /api/v1/template/7    delete
 cli.template['7'].delete()
+
+payload = [{
+          "endpoint": "zwhtest.net",
+          "counter": "net.if.info/region=gd1"
+        }]
+params = {
+    "query": payload
+    }
+cli.graph.lastpoint.post(params=params)

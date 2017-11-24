@@ -70,8 +70,11 @@ class FalconClient(object):
             response = self._session.get(url, verify=self.ssl_verify)
 
         if method == 'post'or method == 'create':
-            url = url + '?' + urlencode(params, doseq=True)
-            response = self._session.post(url, verify=self.ssl_verify)
+            if params.get('query'):
+                params = params.get('query')
+            else:
+                url = url + '?' + urlencode(params, doseq=True)
+            response = self._session.post(url, data=json.dumps(params), verify=self.ssl_verify)
 
         if method == 'put'or method == 'update':
             response = self._session.put(url, data=json.dumps(params), verify=self.ssl_verify)

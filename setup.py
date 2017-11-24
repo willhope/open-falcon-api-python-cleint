@@ -31,6 +31,8 @@ setup(
     long_description=readme,
     url='https://github.com/willhope/open-falcon-api-python-cleint.git',
     license='MIT License',
+    author = 'zengwh',
+    author_email = 'zengwh513@163.com',
     packages=find_packages(exclude=['tests']),
     classifiers=(
         'Development Status :: 3 - Alpha',
