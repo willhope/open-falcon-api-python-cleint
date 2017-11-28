@@ -20,7 +20,7 @@ import re
 with open(os.path.join(os.path.dirname(__file__), 'openfalconclient', '__init__.py')) as f:
     version = re.search("__version__ = '([^']+)'", f.read()).group(1)
 
-with open('README.txt', 'r') as f:
+with open('README.md', 'r') as f:
     readme = f.read()
 
 

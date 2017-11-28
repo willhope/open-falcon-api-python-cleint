@@ -34,12 +34,11 @@ class FalconClient(object):
                 "name": user,
                 "sig": ret.get("sig")
             }
-            self._session.headers = {
+            self._session.headers.update({
                 'Content-Type': 'application/json; charset=utf-8',
                 'Accept': 'application/json',
-                'Apitoken': json.dumps(api_token),
-                "X-Forwarded-For": "127.0.0.1"
-            }
+                'Apitoken': json.dumps(api_token)
+            })
 
     def __getattr__(self, key):
         if key in self.__dict__:
@@ -48,7 +47,8 @@ class FalconClient(object):
         return self.__class__(
             endpoint=self._endpoint,
             keys=self._keys + [key],
-            session=self._session)
+            session=self._session,
+            ssl_verify=self.ssl_verify)
 
     def __getitem__(self, key):
         return self.__getattr__(key)
@@ -59,29 +59,23 @@ class FalconClient(object):
         url = url.strip("/")
         return self.do_request(method, url, **kwargs)
 
-    def do_request(self, method, url, params=None):
+    def do_request(self, method, url, params=None, data=None):
         url = self._endpoint + self._url_prex + url
 
-        if not params:
+        if params is None:
             params = {}
 
         if method == 'get' or method == 'list':
-            url = url + '?' + urlencode(params, doseq=True)
-            response = self._session.get(url, verify=self.ssl_verify)
+            response = self._session.get(url, params=params, verify=self.ssl_verify)
 
         if method == 'post'or method == 'create':
-            if params.get('query'):
-                params = params.get('query')
-            else:
-                url = url + '?' + urlencode(params, doseq=True)
-            response = self._session.post(url, data=json.dumps(params), verify=self.ssl_verify)
+            response = self._session.post(url, params=params, json=data, verify=self.ssl_verify)
 
         if method == 'put'or method == 'update':
-            response = self._session.put(url, data=json.dumps(params), verify=self.ssl_verify)
+            response = self._session.put(url, json=data, verify=self.ssl_verify)
 
         if method == 'delete':
-			url = url + '?' + urlencode(params, doseq=True)
-            response = self._session.delete(url, verify=self.ssl_verify)
+            response = self._session.delete(url, params=params, json=data, verify=self.ssl_verify)
 
         try:
             body = json.loads(response.text)
